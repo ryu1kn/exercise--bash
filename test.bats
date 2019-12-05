@@ -5,9 +5,9 @@ programme=$BATS_TEST_DIRNAME/prepare-commit-msg
 message_file=''
 
 create_commit_message() {
-    local branch_name=$1
+    local branch=$1
     local output_file=$2
-    $BATS_TEST_DIRNAME/original-commit-message.sh "$branch_name" |tee "$output_file"
+    $BATS_TEST_DIRNAME/original-commit-message.sh "$branch" |tee "$output_file"
 }
 
 export_git() {
