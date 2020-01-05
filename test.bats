@@ -3,6 +3,7 @@
 test_tmp_dir=test-tmp
 programme=$BATS_TEST_DIRNAME/prepare-commit-msg
 message_file=''
+diff='diff -y -W 150'
 
 create_commit_message() {
     local branch=$1
@@ -29,8 +30,8 @@ setup() {
     original="$(create_commit_message master "$message_file")"
 
     run $programme "$message_file"
-    
-    diff "$message_file" <(echo "$original")
+
+    $diff "$message_file" <(echo "$original")
 }
 
 # @test 'Begins with a ticket name' {
@@ -39,7 +40,7 @@ setup() {
 
 #     run $programme "$message_file"
 
-#     diff "$message_file" <(cat <<-END_COMMIT_MSG
+#     $diff "$message_file" <(cat <<-END_COMMIT_MSG
 # 		[ISSUE-1000]
 # 		$original
 # 		END_COMMIT_MSG
@@ -52,7 +53,7 @@ setup() {
 
 #     CO_AUTHORED_BY='Foo Bar <foo.bar@example.com>' run $programme "$message_file"
 
-#     diff "$message_file" <(cat <<-END_COMMIT_MSG
+#     $diff "$message_file" <(cat <<-END_COMMIT_MSG
 
 # 		Co-authored-by: Foo Bar <foo.bar@example.com>
 # 		$original
@@ -66,7 +67,7 @@ setup() {
 
 #     CO_AUTHORED_BY='Foo Bar <foo.bar@example.com>' run $programme "$message_file"
 
-#     diff "$message_file" <(cat <<-END_COMMIT_MSG
+#     $diff "$message_file" <(cat <<-END_COMMIT_MSG
 # 		[ISSUE-1000]
 
 # 		Co-authored-by: Foo Bar <foo.bar@example.com>
